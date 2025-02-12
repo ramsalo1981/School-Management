@@ -1,6 +1,6 @@
 package se.lex.model;
 
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Student {
@@ -9,12 +9,15 @@ public class Student {
     private String name;
     private String email;
     private String address;
+    private List<Course> courses ;
+
 
     public Student( String name, String email, String address) {
         this.id = count.incrementAndGet();
         this.name = name;
         this.email = email;
         this.address = address;
+        this.courses  = new ArrayList<>();
     }
 
     public int getId() {
@@ -45,16 +48,33 @@ public class Student {
         this.address = address;
     }
 
+    public void addCourse(Course course) {
+        if (!courses.contains(course)) {
+            courses.add(course);
+            course.register(this);
+        }
+    }
+
+    public void removeCourse(Course course) {
+        if (courses.contains(course)) {
+            courses.remove(course);
+            course.unregister(this); // Bidirectional relationship
+        }
+    }
+
+
+    public List<Course> getCourses() { return courses; }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return Objects.equals(name, student.name) && Objects.equals(email, student.email) && Objects.equals(address, student.address);
+        return Objects.equals(name, student.name) && Objects.equals(email, student.email) && Objects.equals(address, student.address) && Objects.equals(courses, student.courses);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, email, address);
+        return Objects.hash(name, email, address, courses);
     }
 
     @Override
@@ -64,6 +84,7 @@ public class Student {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +
+                ", courses=" + courses +
                 '}';
     }
 }

@@ -6,19 +6,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StudentDaoList implements StudentDao{
-    private static List<Student> students = new ArrayList<>();
+    private static final List<Student> students = new ArrayList<>();
+
     @Override
     public Student saveStudent(Student student) {
-        if(!students.contains(student)){
-            students.add(student);
+        if (student == null) {
+            throw new IllegalArgumentException("Cannot save a null student.");
         }
+        students.add(student);
         return student;
     }
 
     @Override
     public Student findByEmail(String email) {
-        for(Student student:students){
-            if(student.getEmail().equalsIgnoreCase(email)){
+        if (email == null) {
+            throw new IllegalArgumentException("Email cannot be null.");
+        }
+        for (Student student : students) {
+            if (student.getEmail().equalsIgnoreCase(email)) {
                 return student;
             }
         }
@@ -27,6 +32,9 @@ public class StudentDaoList implements StudentDao{
 
     @Override
     public List<Student> findByName(String name) {
+        if (name == null) {
+            throw new IllegalArgumentException("Name cannot be null.");
+        }
         List<Student> result = new ArrayList<>();
         for (Student student : students) {
             if (student.getName().equalsIgnoreCase(name)) {
@@ -53,6 +61,9 @@ public class StudentDaoList implements StudentDao{
 
     @Override
     public boolean deleteStudent(Student student) {
+        if (student == null) {
+            throw new IllegalArgumentException("Cannot delete a null student.");
+        }
         return students.remove(student);
     }
 }

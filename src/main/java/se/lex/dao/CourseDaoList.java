@@ -11,6 +11,9 @@ public class CourseDaoList implements CourseDao{
 
     @Override
     public Course saveCourse(Course course) {
+        if (course == null) {
+            throw new IllegalArgumentException("Cannot save a null course.");
+        }
         courses.add(course);
         return course;
     }
@@ -27,6 +30,9 @@ public class CourseDaoList implements CourseDao{
 
     @Override
     public List<Course> findByName(String name) {
+        if (name == null) {
+            throw new IllegalArgumentException("Course name cannot be null.");
+        }
         List<Course> result = new ArrayList<>();
         for (Course course : courses) {
             if (course.getCourseName().equalsIgnoreCase(name)) {
@@ -38,6 +44,9 @@ public class CourseDaoList implements CourseDao{
 
     @Override
     public List<Course> findByDate(LocalDate date) {
+        if (date == null) {
+            throw new IllegalArgumentException("Date cannot be null.");
+        }
         List<Course> result = new ArrayList<>();
         for (Course course : courses) {
             if (course.getStartDate().equals(date)) {
@@ -54,6 +63,9 @@ public class CourseDaoList implements CourseDao{
 
     @Override
     public boolean removeCourse(Course course) {
+        if (course == null) {
+            throw new IllegalArgumentException("Cannot remove a null course.");
+        }
         return courses.remove(course);
     }
 }
