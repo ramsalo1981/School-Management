@@ -88,10 +88,10 @@ public class MenuService {
     }
 
     private void registerStudentToCourse() {
-        System.out.print("Enter Student Name: ");
+        System.out.print("Enter Student ID: ");
         int studentId = scanner.nextInt();
         scanner.nextLine();
-        System.out.print("Enter Course Course Name: ");
+        System.out.print("Enter Course ID: ");
         int courseId = scanner.nextInt();
         scanner.nextLine();
 
